@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>若草秘密基地 伊勢旅行のしおり</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f0;
+    --surface: #ffffff;
+    --surface2: #f0efe6;
+    --border: rgba(60, 70, 30, 0.12);
+    --text: #33381f;
+    --text2: #7c8163;
+    --text3: #b0b49a;
+    --wakakusa: #8ab833;
+    --wakakusa-deep: #5d8a1e;
+    --wakakusa-pale: #eef4dd;
+    --akane: #d96c4f;
+    --sora: #5da8b8;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', "Hiragino Kaku Gothic ProN", sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ===== NAV ===== */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247, 246, 240, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+    padding: env(safe-area-inset-top, 0) 20px 0;
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-title { font-size: 16px; font-weight: 700; letter-spacing: 0.04em; }
+  .nav-sub {
+    font-size: 10px;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    margin-top: 1px;
+    letter-spacing: 0.08em;
+  }
+  .nav-badge {
+    background: var(--wakakusa);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== TABS ===== */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 10px 0 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 0 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .15s;
+  }
+  .tab.active {
+    background: var(--text);
+    border-color: var(--text);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadein .25s ease; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .wrap { max-width: 560px; margin: 0 auto; padding: 20px 20px 80px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(160deg, var(--wakakusa-deep), var(--wakakusa) 70%, #a8cc5e);
+    border-radius: 20px;
+    padding: 34px 24px 28px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(93, 138, 30, 0.25);
+  }
+  .hero::after {
+    content: "⛩";
+    position: absolute;
+    right: -10px;
+    bottom: -24px;
+    font-size: 130px;
+    opacity: 0.14;
+    line-height: 1;
+  }
+  .hero-club {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    opacity: 0.9;
+    margin-bottom: 8px;
+  }
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
+  }
+  .hero-title small { display: block; font-size: 15px; font-weight: 600; margin-top: 4px; letter-spacing: 0.2em; }
+  .hero-date {
+    display: inline-block;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== CARD ===== */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(60,70,30,0.04);
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--wakakusa-deep);
+    letter-spacing: 0.18em;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin: 26px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: "";
+    width: 5px;
+    height: 20px;
+    background: var(--wakakusa);
+    border-radius: 3px;
+  }
+
+  /* ===== INFO GRID ===== */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .info-item {
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  .info-item.full { grid-column: 1 / -1; }
+  .info-k { font-size: 11px; color: var(--text2); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 3px; }
+  .info-v { font-size: 15px; font-weight: 700; }
+
+  [contenteditable] {
+    outline: none;
+    border-bottom: 1.5px dashed rgba(138, 184, 51, 0.55);
+    min-width: 40px;
+    display: inline-block;
+    padding: 0 2px;
+  }
+  [contenteditable]:focus { background: var(--wakakusa-pale); border-radius: 4px; }
+  .edit-hint {
+    font-size: 11px;
+    color: var(--text3);
+    text-align: center;
+    margin: -4px 0 14px;
+  }
+
+  /* ===== TIMELINE ===== */
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 24px 0 14px;
+  }
+  .day-chip {
+    background: var(--text);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+  }
+  .day-chip.d2 { background: var(--akane); }
+  .day-title { font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 800; }
+
+  .tl { position: relative; padding-left: 24px; }
+  .tl::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(var(--wakakusa), rgba(138,184,51,0.15));
+    border-radius: 2px;
+  }
+  .tl-item { position: relative; padding-bottom: 18px; }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -22px;
+    top: 7px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 3px solid var(--wakakusa);
+  }
+  .tl-item.spot::before { border-color: var(--akane); }
+  .tl-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--wakakusa-deep);
+    letter-spacing: 0.05em;
+  }
+  .tl-item.spot .tl-time { color: var(--akane); }
+  .tl-what { font-size: 15px; font-weight: 700; margin: 1px 0 2px; }
+  .tl-note { font-size: 13px; color: var(--text2); }
+
+  /* ===== ROUTE LINK / TABLE ===== */
+  .route-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--sora);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 6px;
+    box-shadow: 0 4px 12px rgba(93, 168, 184, 0.3);
+  }
+  .route-note {
+    font-size: 11px;
+    color: var(--text3);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -4px; }
+  table.sched {
+    width: 100%;
+    min-width: 500px;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  table.sched th {
+    background: var(--wakakusa-pale);
+    color: var(--wakakusa-deep);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 8px 8px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  table.sched td {
+    padding: 9px 8px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table.sched td.t {
+    font-family: 'DM Mono', monospace;
+    font-size: 11.5px;
+    color: var(--wakakusa-deep);
+    white-space: nowrap;
+  }
+  table.sched td.what { font-weight: 700; min-width: 120px; }
+  table.sched td.what small { display: block; font-weight: 400; color: var(--text2); font-size: 11.5px; }
+  table.sched td.move { color: var(--text2); font-size: 12px; min-width: 110px; }
+  table.sched td.cost { text-align: right; font-family: 'DM Mono', monospace; font-size: 12px; white-space: nowrap; }
+  table.sched tr.sub td { background: var(--surface2); font-weight: 700; }
+  table.cost-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.cost-tbl td { padding: 7px 4px; border-bottom: 1px solid var(--border); }
+  table.cost-tbl td:last-child { text-align: right; font-family: 'DM Mono', monospace; }
+  table.cost-tbl tr.total td {
+    border-bottom: none;
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--wakakusa-deep);
+    padding-top: 12px;
+  }
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sora);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+
+  /* ===== SPOTS ===== */
+  .spot-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(60,70,30,0.04);
+  }
+  .spot-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--wakakusa-pale);
+  }
+  .spot-emoji { font-size: 28px; }
+  .spot-name { font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 800; }
+  .spot-yomi { font-size: 11px; color: var(--text2); font-weight: 500; }
+  .spot-body { padding: 14px 16px; font-size: 13.5px; color: var(--text); }
+  .spot-body p { margin-bottom: 8px; }
+  .spot-tip {
+    background: var(--surface2);
+    border-left: 3px solid var(--wakakusa);
+    border-radius: 0 8px 8px 0;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: var(--text2);
+  }
+  .spot-tip b { color: var(--wakakusa-deep); }
+
+  /* ===== GOURMET ===== */
+  .food-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .food-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .food-emoji { font-size: 34px; margin-bottom: 6px; }
+  .food-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .food-note { font-size: 12px; color: var(--text2); }
+
+  /* ===== CHECKLIST ===== */
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: all .15s;
+  }
+  .check-item .box {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    border: 2px solid var(--text3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    flex: 0 0 auto;
+    transition: all .15s;
+  }
+  .check-item.done .box { background: var(--wakakusa); border-color: var(--wakakusa); }
+  .check-item .label { font-size: 14px; font-weight: 500; }
+  .check-item.done .label { color: var(--text3); text-decoration: line-through; }
+  .check-progress {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  /* ===== MANNER ===== */
+  .manner-step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .manner-num {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--wakakusa);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .manner-txt { font-size: 13.5px; }
+  .manner-txt b { display: block; font-size: 14.5px; }
+
+  /* ===== MEMO ===== */
+  .memo {
+    width: 100%;
+    min-height: 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    resize: vertical;
+    line-height: 1.8;
+  }
+  .memo:focus { outline: 2px solid var(--wakakusa); }
+
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text3);
+    padding: 30px 0 10px;
+    letter-spacing: 0.15em;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div>
+      <div class="nav-title">伊勢旅行のしおり</div>
+      <div class="nav-sub">WAKAKUSA HIMITSU-KICHI</div>
+    </div>
+    <div class="nav-badge">1泊2日</div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-screen="home">表紙</button>
+    <button class="tab" data-screen="plan">旅程</button>
+    <button class="tab" data-screen="spots">スポット</button>
+    <button class="tab" data-screen="food">グルメ</button>
+    <button class="tab" data-screen="goods">持ち物</button>
+    <button class="tab" data-screen="memo">メモ</button>
+  </div>
+</nav>
+
+<!-- ===== HOME ===== -->
+<section class="screen active" id="screen-home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-club">若 草 秘 密 基 地</div>
+      <div class="hero-title">伊勢旅行<small>― お伊勢参りの旅 ―</small></div>
+      <div class="hero-date" contenteditable="true" data-save="trip-date">2026.--.-- (土) 〜 --.-- (日)</div>
+    </div>
+    <p class="edit-hint">✎ 点線の項目はタップして書き換えられます（自動保存）</p>
+
+    <div class="card">
+      <div class="card-label">集合・基本情報</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-k">集合時間</div>
+          <div class="info-v" contenteditable="true" data-save="meet-time">--:--</div>
+        </div>
+        <div class="info-item">
+          <div class="info-k">集合場所</div>
+          <div class="info-v" contenteditable="true" data-save="meet-place">未定</div>
+        </div>
+        <div class="info-item">
+          <div class="info-k">移動手段</div>
+          <div class="info-v" contenteditable="true" data-save="transport">未定</div>
+        </div>
+        <div class="info-item">
+          <div class="info-k">予算目安</div>
+          <div class="info-v" contenteditable="true" data-save="budget">¥ --,---</div>
+        </div>
+        <div class="info-item full">
+          <div class="info-k">宿泊先</div>
+          <div class="info-v" contenteditable="true" data-save="hotel">未定</div>
+        </div>
+        <div class="info-item full">
+          <div class="info-k">メンバー</div>
+          <div class="info-v" contenteditable="true" data-save="members">若草秘密基地のみんな</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">この旅のテーマ</div>
+      <p style="font-size:14px;">日本人の心のふるさと・お伊勢さんへ。外宮から内宮へと正式な順路でお参りして、おかげ横丁で食べ歩き。二見浦の夫婦岩で朝日を拝めたら最高。よく歩く旅なので、歩きやすい靴で！</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLAN ===== -->
+<section class="screen" id="screen-plan">
+  <div class="wrap">
+
+    <div class="day-head">
+      <span class="day-chip">DAY 1</span>
+      <span class="day-title">外宮 → 内宮 → おかげ横丁 → 二見泊</span>
+    </div>
+
+    <a class="route-btn" target="_blank" rel="noopener"
+       href="https://www.google.com/maps/dir/近鉄名古屋駅/伊勢市駅/伊勢神宮外宮/伊勢神宮内宮/おかげ横丁/二見浦駅">
+      🗺️ DAY 1 のルートを地図で見る
+    </a>
+    <p class="route-note">発着地は仮（近鉄名古屋駅発・二見浦の宿泊）。開いた後に地点を自由に書き換えられます</p>
+
+    <div class="card">
+      <div class="tbl-wrap">
+        <table class="sched">
+          <tr><th>時刻</th><th>予定</th><th>移動・所要時間</th><th>費用/人</th></tr>
+          <tr>
+            <td class="t">08:10</td>
+            <td class="what">出発（仮：近鉄名古屋駅）<small>近鉄特急で伊勢市駅へ</small></td>
+            <td class="move">🚃 特急 約1時間25分</td>
+            <td class="cost">¥3,000</td>
+          </tr>
+          <tr>
+            <td class="t">09:40</td>
+            <td class="what">伊勢市駅 着 → 外宮へ<small>参道をぶらぶら歩く</small></td>
+            <td class="move">🚶 徒歩 約5分</td>
+            <td class="cost">—</td>
+          </tr>
+          <tr>
+            <td class="t">10:00</td>
+            <td class="what">伊勢神宮 外宮 参拝<small>観光目安 約60分・参拝無料</small></td>
+            <td class="move">滞在 60分</td>
+            <td class="cost">¥0</td>
+          </tr>
+          <tr>
+            <td class="t">11:15</td>
+            <td class="what">昼食：伊勢うどん or てこね寿司<small>外宮参道のお店で</small></td>
+            <td class="move">滞在 45分</td>
+            <td class="cost">¥1,200</td>
+          </tr>
+          <tr>
+            <td class="t">12:10</td>
+            <td class="what">外宮 → 内宮 へ移動<small>三重交通バス 51/55系統</small></td>
+            <td class="move">🚌 バス 約20分</td>
+            <td class="cost">¥470</td>
+          </tr>
+          <tr>
+            <td class="t">12:40</td>
+            <td class="what">伊勢神宮 内宮 参拝<small>観光目安 約90分・参拝無料</small></td>
+            <td class="move">滞在 90分</td>
+            <td class="cost">¥0</td>
+          </tr>
+          <tr>
+            <td class="t">14:15</td>
+            <td class="what">おかげ横丁・おはらい町<small>食べ歩き＆おみやげ（〜17時頃閉店注意）</small></td>
+            <td class="move">滞在 100分</td>
+            <td class="cost">¥1,500</td>
+          </tr>
+          <tr>
+            <td class="t">16:10</td>
+            <td class="what">内宮前 → 二見の宿へ<small>CANばす or 伊勢市駅経由JR</small></td>
+            <td class="move">🚌 約40分</td>
+            <td class="cost">¥700</td>
+          </tr>
+          <tr>
+            <td class="t">17:00</td>
+            <td class="what">宿チェックイン（仮：二見浦）<small>1泊2食・温泉・作戦会議</small></td>
+            <td class="move">—</td>
+            <td class="cost">¥15,000</td>
+          </tr>
+          <tr class="sub"><td></td><td>DAY 1 小計</td><td></td><td class="cost">¥21,870</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="day-head">
+      <span class="day-chip d2">DAY 2</span>
+      <span class="day-title">夫婦岩 → 鳥羽 → 帰路</span>
+    </div>
+
+    <a class="route-btn" target="_blank" rel="noopener"
+       href="https://www.google.com/maps/dir/二見浦駅/二見興玉神社/鳥羽水族館/鳥羽駅/近鉄名古屋駅">
+      🗺️ DAY 2 のルートを地図で見る
+    </a>
+    <p class="route-note">発着地は仮（二見浦の宿発・近鉄名古屋駅着）。開いた後に地点を自由に書き換えられます</p>
+
+    <div class="card">
+      <div class="tbl-wrap">
+        <table class="sched">
+          <tr><th>時刻</th><th>予定</th><th>移動・所要時間</th><th>費用/人</th></tr>
+          <tr>
+            <td class="t">06:45</td>
+            <td class="what">二見興玉神社・夫婦岩<small>朝の海と朝日を拝む。観光目安 約40分・無料</small></td>
+            <td class="move">🚶 宿から徒歩 約10分</td>
+            <td class="cost">¥0</td>
+          </tr>
+          <tr>
+            <td class="t">08:00</td>
+            <td class="what">宿で朝食 → チェックアウト</td>
+            <td class="move">—</td>
+            <td class="cost">—</td>
+          </tr>
+          <tr>
+            <td class="t">09:45</td>
+            <td class="what">二見浦 → 鳥羽 へ移動<small>JR参宮線</small></td>
+            <td class="move">🚃 約10分</td>
+            <td class="cost">¥240</td>
+          </tr>
+          <tr>
+            <td class="t">10:00</td>
+            <td class="what">鳥羽水族館<small>観光目安 約120分。ラッコとジュゴンに会える</small></td>
+            <td class="move">滞在 120分</td>
+            <td class="cost">¥2,800</td>
+          </tr>
+          <tr>
+            <td class="t">12:15</td>
+            <td class="what">昼食：鳥羽で海鮮<small>的矢かき・伊勢えびなど</small></td>
+            <td class="move">滞在 60分</td>
+            <td class="cost">¥2,000</td>
+          </tr>
+          <tr>
+            <td class="t">13:30</td>
+            <td class="what">おみやげ購入<small>赤福・へんば餅など</small></td>
+            <td class="move">滞在 40分</td>
+            <td class="cost">¥2,000</td>
+          </tr>
+          <tr>
+            <td class="t">14:25</td>
+            <td class="what">鳥羽駅 → 帰路（仮：近鉄名古屋駅）<small>近鉄特急</small></td>
+            <td class="move">🚃 特急 約1時間40分</td>
+            <td class="cost">¥3,200</td>
+          </tr>
+          <tr>
+            <td class="t">16:10</td>
+            <td class="what">到着・解散 おつかれさま！<small>次回の秘密基地会議で写真共有</small></td>
+            <td class="move">—</td>
+            <td class="cost">—</td>
+          </tr>
+          <tr class="sub"><td></td><td>DAY 2 小計</td><td></td><td class="cost">¥10,240</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-title">費用まとめ（1人あたり）</div>
+    <div class="card">
+      <table class="cost-tbl">
+        <tr><td>交通費（特急往復＋バス・JR）</td><td>¥7,610</td></tr>
+        <tr><td>宿泊費（1泊2食）</td><td>¥15,000</td></tr>
+        <tr><td>食事（昼食×2・食べ歩き）</td><td>¥4,700</td></tr>
+        <tr><td>観光（鳥羽水族館 ほか参拝は無料）</td><td>¥2,800</td></tr>
+        <tr><td>おみやげ</td><td>¥2,000</td></tr>
+        <tr class="total"><td>総計（1人あたり目安）</td><td>約 ¥32,110</td></tr>
+      </table>
+      <p style="font-size:11.5px;color:var(--text3);margin-top:10px;">※ 2026年時点の目安料金。グループ合計は「×人数」で計算。車移動の場合は特急代の代わりに高速代＋ガソリン代（名古屋発で1台あたり往復 約¥10,000）を人数割り。</p>
+    </div>
+    <p class="edit-hint">※ 時間はあくまで目安。当日はゆるっと行こう</p>
+  </div>
+</section>
+
+<!-- ===== SPOTS ===== -->
+<section class="screen" id="screen-spots">
+  <div class="wrap">
+    <div class="section-title">立ち寄りスポット</div>
+
+    <div class="spot-card">
+      <div class="spot-head">
+        <div class="spot-emoji">⛩️</div>
+        <div>
+          <div class="spot-name">伊勢神宮 外宮</div>
+          <div class="spot-yomi">とようけだいじんぐう｜伊勢市駅から徒歩5分</div>
+        </div>
+      </div>
+      <div class="spot-body">
+        <p>衣食住の神様・豊受大御神をまつるお宮。約1500年の歴史。玉砂利を踏みしめて歩く参道の空気がすでに別世界。</p>
+        <div class="spot-tip"><b>TIP</b>：外宮の参道は<b>左側通行</b>。参拝は5:00頃から可能（季節で変動）。</div>
+        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=伊勢神宮外宮">📍 Googleマップで開く →</a>
+      </div>
+    </div>
+
+    <div class="spot-card">
+      <div class="spot-head">
+        <div class="spot-emoji">🌊</div>
+        <div>
+          <div class="spot-name">伊勢神宮 内宮</div>
+          <div class="spot-yomi">こうたいじんぐう｜外宮からバス約15分</div>
+        </div>
+      </div>
+      <div class="spot-body">
+        <p>天照大御神をまつる日本の総氏神。宇治橋から見る五十鈴川、樹齢数百年の杉並木。正宮では個人的なお願いより日頃の感謝を伝えるのが習わし。</p>
+        <div class="spot-tip"><b>TIP</b>：内宮は<b>右側通行</b>。お願いごとは正宮ではなく<b>荒祭宮</b>で。</div>
+        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=伊勢神宮内宮">📍 Googleマップで開く →</a>
+      </div>
+    </div>
+
+    <div class="spot-card">
+      <div class="spot-head">
+        <div class="spot-emoji">🏮</div>
+        <div>
+          <div class="spot-name">おかげ横丁・おはらい町</div>
+          <div class="spot-yomi">内宮宇治橋前すぐ</div>
+        </div>
+      </div>
+      <div class="spot-body">
+        <p>江戸〜明治の町並みを再現した食べ歩き天国。石畳の通りに約800mにわたって土産物屋と名物グルメがぎっしり。</p>
+        <div class="spot-tip"><b>TIP</b>：多くの店が<b>17時前後に閉まる</b>ので、参拝後は早めに突入すべし。</div>
+        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=おかげ横丁">📍 Googleマップで開く →</a>
+      </div>
+    </div>
+
+    <div class="spot-card">
+      <div class="spot-head">
+        <div class="spot-emoji">🪨</div>
+        <div>
+          <div class="spot-name">二見興玉神社・夫婦岩</div>
+          <div class="spot-yomi">ふたみおきたまじんじゃ｜二見浦駅から徒歩15分</div>
+        </div>
+      </div>
+      <div class="spot-body">
+        <p>海に浮かぶ大小2つの岩を大注連縄で結んだ夫婦岩。昔はお伊勢参りの前にここで身を清めるのが習わしだった（浜参宮）。縁結び・夫婦円満のご利益。</p>
+        <div class="spot-tip"><b>TIP</b>：5〜7月は夫婦岩の間から<b>朝日が昇る</b>絶景シーズン。早起きの価値あり。</div>
+        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=二見興玉神社">📍 Googleマップで開く →</a>
+      </div>
+    </div>
+
+    <div class="spot-card">
+      <div class="spot-head">
+        <div class="spot-emoji">🐒</div>
+        <div>
+          <div class="spot-name">猿田彦神社</div>
+          <div class="spot-yomi">さるたひこじんじゃ｜内宮から徒歩20分</div>
+        </div>
+      </div>
+      <div class="spot-body">
+        <p>「みちひらき」の神様。新しいことを始める人、進むべき道に迷っている人の背中を押してくれる。境内の八角形の石柱は触るとご利益があるとか。</p>
+        <div class="spot-tip"><b>TIP</b>：内宮とセットで回りやすい立地。所要30分ほど。</div>
+        <a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=猿田彦神社+伊勢">📍 Googleマップで開く →</a>
+      </div>
+    </div>
+
+    <div class="section-title">参拝の作法</div>
+    <div class="card">
+      <div class="manner-step">
+        <div class="manner-num">1</div>
+        <div class="manner-txt"><b>鳥居の前で一礼</b>神様の家の玄関。くぐる前に軽くおじぎ。</div>
+      </div>
+      <div class="manner-step">
+        <div class="manner-num">2</div>
+        <div class="manner-txt"><b>手水舎で清める</b>左手 → 右手 → 口 → 柄杓の柄の順に清める。</div>
+      </div>
+      <div class="manner-step">
+        <div class="manner-num">3</div>
+        <div class="manner-txt"><b>二拝二拍手一拝</b>深いおじぎ2回 → 拍手2回 → 感謝を伝えて → 深いおじぎ1回。</div>
+      </div>
+      <div class="manner-step">
+        <div class="manner-num">4</div>
+        <div class="manner-txt"><b>正宮では感謝を</b>お願いごとは別宮（内宮なら荒祭宮、外宮なら多賀宮）で。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOD ===== -->
+<section class="screen" id="screen-food">
+  <div class="wrap">
+    <div class="section-title">必食グルメ</div>
+    <div class="food-grid">
+      <div class="food-card">
+        <div class="food-emoji">🍡</div>
+        <div class="food-name">赤福餅</div>
+        <div class="food-note">本店で出来たてを。夏は赤福氷も</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🍜</div>
+        <div class="food-name">伊勢うどん</div>
+        <div class="food-note">極太ふわ麺＋たまり醤油ダレ</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🍣</div>
+        <div class="food-name">てこね寿司</div>
+        <div class="food-note">漬けカツオの海女めし</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🥩</div>
+        <div class="food-name">松阪牛串</div>
+        <div class="food-note">おかげ横丁で食べ歩き</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🥟</div>
+        <div class="food-name">豚捨コロッケ</div>
+        <div class="food-note">行列必至の老舗精肉店</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🦪</div>
+        <div class="food-name">的矢かき・伊勢えび</div>
+        <div class="food-note">海鮮は二見・鳥羽方面が本場</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🍵</div>
+        <div class="food-name">へんば餅</div>
+        <div class="food-note">おみやげの隠れ名品</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🍺</div>
+        <div class="food-name">伊勢角屋麦酒</div>
+        <div class="food-note">世界が認めた地ビール</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GOODS ===== -->
+<section class="screen" id="screen-goods">
+  <div class="wrap">
+    <div class="section-title">持ち物チェック</div>
+    <div class="check-progress" id="check-progress">0 / 0</div>
+    <div id="check-list"></div>
+    <p class="edit-hint">タップでチェック（この端末に自動保存されます）</p>
+  </div>
+</section>
+
+<!-- ===== MEMO ===== -->
+<section class="screen" id="screen-memo">
+  <div class="wrap">
+    <div class="section-title">自由メモ</div>
+    <textarea class="memo" id="memo" placeholder="買いたいおみやげ、行きたいお店、集合の連絡事項など…"></textarea>
+    <p class="edit-hint">この端末に自動保存されます</p>
+  </div>
+</section>
+
+<div class="footer">WAKAKUSA HIMITSU-KICHI — ISE TRIP</div>
+
+<script>
+  const LS = 'wakakusa-ise-';
+
+  // タブ切り替え
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('screen-' + tab.dataset.screen).classList.add('active');
+      window.scrollTo(0, 0);
+    });
+  });
+
+  // 編集可能フィールドの保存/復元
+  document.querySelectorAll('[contenteditable][data-save]').forEach(el => {
+    const key = LS + el.dataset.save;
+    const saved = localStorage.getItem(key);
+    if (saved) el.textContent = saved;
+    el.addEventListener('blur', () => localStorage.setItem(key, el.textContent.trim()));
+  });
+
+  // 持ち物チェックリスト
+  const ITEMS = [
+    '財布・現金（小銭多めが吉）', 'スマホ・充電器・モバイルバッテリー',
+    '着替え・下着', '歩きやすい靴（1万歩コース）',
+    '帽子・日焼け止め', '折りたたみ傘 / レインウェア',
+    '常備薬・絆創膏', 'ハンカチ・ティッシュ',
+    '御朱印帳（集めている人）', 'エコバッグ（おみやげ用）',
+    '健康保険証', 'カメラ / 自撮り棒',
+  ];
+  const listEl = document.getElementById('check-list');
+  const progEl = document.getElementById('check-progress');
+  const checkKey = LS + 'checks';
+  let checks = JSON.parse(localStorage.getItem(checkKey) || '{}');
+
+  function renderChecks() {
+    listEl.innerHTML = '';
+    let done = 0;
+    ITEMS.forEach((label, i) => {
+      if (checks[i]) done++;
+      const div = document.createElement('div');
+      div.className = 'check-item' + (checks[i] ? ' done' : '');
+      div.innerHTML = '<div class="box">' + (checks[i] ? '✓' : '') + '</div><div class="label"></div>';
+      div.querySelector('.label').textContent = label;
+      div.addEventListener('click', () => {
+        checks[i] = !checks[i];
+        localStorage.setItem(checkKey, JSON.stringify(checks));
+        renderChecks();
+      });
+      listEl.appendChild(div);
+    });
+    progEl.textContent = done + ' / ' + ITEMS.length;
+  }
+  renderChecks();
+
+  // メモ
+  const memo = document.getElementById('memo');
+  memo.value = localStorage.getItem(LS + 'memo') || '';
+  memo.addEventListener('input', () => localStorage.setItem(LS + 'memo', memo.value));
+</script>
+</body>
+</html>

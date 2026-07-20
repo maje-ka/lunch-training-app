@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>若草秘密基地 伊勢旅行のしおり</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;800&family=M+PLUS+Rounded+1c:wght@800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f7f6f0;
@@ -152,6 +152,173 @@
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.05em;
+  }
+
+  /* ===== COVER (表紙) ===== */
+  .cover {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, #7fcdec 0%, #aee3f7 55%, #cdeffa 100%);
+    box-shadow: 0 10px 30px rgba(60, 140, 180, 0.3);
+    padding: 22px 16px 0;
+    text-align: center;
+  }
+  .cover .deco {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .cover-board {
+    position: relative;
+    background: #fdf6e3;
+    border: 6px solid #a9744b;
+    outline: 3px solid #7c5233;
+    border-radius: 14px;
+    padding: 14px 12px 12px;
+    margin: 0 4px 12px;
+    box-shadow: 0 6px 0 rgba(124, 82, 51, 0.35);
+  }
+  .cover-dest {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 900;
+    color: #6b4a2c;
+    letter-spacing: 0.12em;
+    border: 1.5px solid #c9a06a;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2px 12px;
+    margin-bottom: 6px;
+  }
+  .cover-title {
+    font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 44px;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-shadow:
+      -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff,
+      0 4px 0 rgba(124, 82, 51, 0.25);
+  }
+  .cover-title span:nth-child(1) { color: #ff7ba9; }
+  .cover-title span:nth-child(2) { color: #ffa136; }
+  .cover-title span:nth-child(3) { color: #7ec14a; }
+  .cover-title span:nth-child(4) { color: #4aa6e0; }
+  .cover-title span:nth-child(5) { color: #9b7fd4; }
+  .cover-title span:nth-child(6) { color: #ff6b5e; }
+  .cover-board .hero-date {
+    margin-top: 8px;
+    background: #fff;
+    border: 1.5px dashed #c9a06a;
+    color: #6b4a2c;
+    font-weight: 900;
+  }
+  .cover-banner {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(180deg, #ffb54d, #ff9a1f);
+    color: #fff;
+    white-space: nowrap;
+    max-width: 100%;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    padding: 6px 10px;
+    border-radius: 20px;
+    box-shadow: 0 3px 0 rgba(200, 110, 0, 0.4);
+    margin-bottom: 14px;
+  }
+  .cover-route {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+  }
+  .cover-route .stop {
+    background: #fffbe9;
+    border: 2px solid;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+    padding: 5px 8px;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+  }
+  .cover-route .stop.s1 { border-color: #d9534a; color: #b23a32; }
+  .cover-route .stop.s2 { border-color: #7ec14a; color: #4e8a24; }
+  .cover-route .stop.s3 { border-color: #4aa6e0; color: #2b78ab; }
+  .cover-route .arrow {
+    flex: 0 0 auto;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #ff9a1f;
+    color: #fff;
+    font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 0 rgba(200,110,0,0.4);
+  }
+  .cover-adventure {
+    position: relative;
+    font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+    color: #2b78ab;
+    letter-spacing: 0.2em;
+    margin-bottom: 4px;
+    text-shadow: -1.5px -1.5px 0 #fff, 1.5px -1.5px 0 #fff, -1.5px 1.5px 0 #fff, 1.5px 1.5px 0 #fff;
+  }
+  .cover-scene { display: block; width: calc(100% + 32px); margin: -6px -16px 0; }
+  .cover-foot {
+    background: #79b52e;
+    margin: -4px -16px 0;
+    padding: 0 20px 14px;
+    text-align: center;
+  }
+  .cover-members {
+    position: relative;
+    margin: -72px auto 10px;
+    width: min(82%, 330px);
+    background: rgba(255, 251, 233, 0.96);
+    border: 2.5px dashed #ffa136;
+    border-radius: 14px;
+    padding: 10px 14px 12px;
+    box-shadow: 0 4px 10px rgba(60, 80, 40, 0.2);
+  }
+  .cover-members .mk {
+    font-size: 13px;
+    font-weight: 900;
+    color: #ff8a1f;
+    letter-spacing: 0.15em;
+    margin-bottom: 4px;
+  }
+  .cover-members .mv {
+    width: 100%;
+    min-height: 46px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #6b4a2c;
+    text-align: left;
+    line-height: 23px;
+    border-bottom: none !important;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 21px, #e0b878 21px 23px);
+  }
+  .cover-members .mv:focus { background-color: transparent; }
+  .cover-ribbon {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    background: #fff;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 900;
+    color: #d9534a;
+    padding: 6px 16px;
+    box-shadow: 0 3px 8px rgba(60, 80, 40, 0.25);
   }
 
   /* ===== CARD ===== */
@@ -497,10 +664,104 @@
 <!-- ===== HOME ===== -->
 <section class="screen active" id="screen-home">
   <div class="wrap">
-    <div class="hero">
-      <div class="hero-club">若 草 秘 密 基 地</div>
-      <div class="hero-title">伊勢旅行<small>― お伊勢参りの旅 ―</small></div>
-      <div class="hero-date" contenteditable="true" data-save="trip-date">2026.--.-- (土) 〜 --.-- (日)</div>
+    <div class="cover">
+      <svg class="deco" viewBox="0 0 400 600" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+        <circle cx="360" cy="30" r="26" fill="#ffd94d"/>
+        <g stroke="#ffd94d" stroke-width="5" stroke-linecap="round">
+          <line x1="360" y1="-10" x2="360" y2="-2"/><line x1="322" y1="30" x2="314" y2="30"/>
+          <line x1="333" y1="3" x2="327" y2="-3"/><line x1="333" y1="57" x2="327" y2="63"/>
+        </g>
+        <g fill="#ffffff" opacity="0.9">
+          <ellipse cx="60" cy="46" rx="34" ry="13"/><ellipse cx="88" cy="38" rx="24" ry="10"/>
+          <ellipse cx="330" cy="96" rx="30" ry="11"/><ellipse cx="54" cy="150" rx="26" ry="10"/>
+        </g>
+        <g opacity="0.85">
+          <circle cx="24" cy="90" r="4" fill="#ff7ba9"/><circle cx="380" cy="150" r="4" fill="#7ec14a"/>
+          <rect x="370" y="60" width="7" height="7" rx="1.5" fill="#4aa6e0" transform="rotate(20 373 63)"/>
+          <rect x="20" y="200" width="7" height="7" rx="1.5" fill="#ffa136" transform="rotate(-15 23 203)"/>
+          <circle cx="14" cy="260" r="4" fill="#9b7fd4"/><circle cx="388" cy="230" r="4" fill="#ff6b5e"/>
+        </g>
+      </svg>
+
+      <div class="cover-board">
+        <div class="cover-dest">伊勢神宮・おかげ横丁・二見浦・鳥羽</div>
+        <div class="cover-title"><span>旅</span><span>行</span><span>の</span><span>し</span><span>お</span><span>り</span></div>
+        <div class="hero-date" contenteditable="true" data-save="trip-date">2026.--.-- (土) 〜 --.-- (日)</div>
+      </div>
+
+      <div class="cover-banner">思いっきりお参りして、みんなで最高の思い出を作ろう！</div>
+
+      <div class="cover-route">
+        <span class="stop s1">⛩️ 伊勢神宮</span>
+        <span class="arrow">▶</span>
+        <span class="stop s2">🏮 おかげ横丁</span>
+        <span class="arrow">▶</span>
+        <span class="stop s3">🪨 夫婦岩</span>
+      </div>
+
+      <div class="cover-adventure">１泊２日の大ぼうけん</div>
+
+      <svg class="cover-scene" viewBox="0 0 400 300" aria-hidden="true">
+        <!-- 遠景の山 -->
+        <path d="M-10 190 L80 100 L170 190 Z" fill="#9fd08a"/>
+        <path d="M80 100 L104 124 L92 124 L116 148 L100 148 L128 176 L56 176 L84 148 L68 148 L92 124 L80 124 Z" fill="#e9f5e2" opacity="0.7"/>
+        <path d="M180 200 L290 90 L400 200 Z" fill="#7bb768"/>
+        <!-- 海 -->
+        <rect x="0" y="185" width="400" height="115" fill="#58b7d6"/>
+        <g stroke="#8fd2e8" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.8">
+          <path d="M20 215 q10 -8 20 0 q10 8 20 0"/>
+          <path d="M300 210 q10 -8 20 0 q10 8 20 0"/>
+          <path d="M150 240 q10 -8 20 0 q10 8 20 0"/>
+        </g>
+        <!-- 夫婦岩 -->
+        <g>
+          <path d="M262 158 q4 -46 30 -52 q30 -6 36 42 l6 62 h-78 Z" fill="#6b6156"/>
+          <path d="M348 182 q2 -26 16 -28 q16 -2 18 24 l3 32 h-39 Z" fill="#7a7065"/>
+          <path d="M292 106 h12 l-2 -8 h-8 Z" fill="#d9534a"/>
+          <rect x="290" y="98" width="16" height="4" rx="2" fill="#d9534a"/>
+          <path d="M300 118 q34 30 62 38" stroke="#d8c27a" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <g stroke="#d8c27a" stroke-width="3" stroke-linecap="round">
+            <line x1="316" y1="132" x2="314" y2="144"/><line x1="334" y1="144" x2="332" y2="156"/><line x1="350" y1="152" x2="348" y2="164"/>
+          </g>
+        </g>
+        <!-- 大鳥居 -->
+        <g>
+          <path d="M60 122 q60 -14 120 0 l-4 16 q-56 -12 -112 0 Z" fill="#c9403a"/>
+          <rect x="66" y="150" width="108" height="10" rx="4" fill="#d9534a"/>
+          <rect x="78" y="150" width="14" height="112" rx="4" fill="#d9534a"/>
+          <rect x="148" y="150" width="14" height="112" rx="4" fill="#d9534a"/>
+          <rect x="112" y="160" width="16" height="26" rx="3" fill="#fdf6e3" stroke="#c9a06a" stroke-width="2"/>
+        </g>
+        <!-- 手前の地面 -->
+        <path d="M0 252 q100 -22 200 0 q100 22 200 0 L400 300 L0 300 Z" fill="#8cc63f"/>
+        <path d="M0 262 q100 -20 200 0 q100 20 200 0 L400 300 L0 300 Z" fill="#79b52e"/>
+        <!-- カエル（無事カエル） -->
+        <g transform="translate(38 236)">
+          <ellipse cx="0" cy="10" rx="16" ry="12" fill="#6fbf4a"/>
+          <circle cx="-8" cy="-4" r="6" fill="#6fbf4a"/><circle cx="8" cy="-4" r="6" fill="#6fbf4a"/>
+          <circle cx="-8" cy="-5" r="2.5" fill="#fff"/><circle cx="8" cy="-5" r="2.5" fill="#fff"/>
+          <circle cx="-8" cy="-5" r="1.2" fill="#333"/><circle cx="8" cy="-5" r="1.2" fill="#333"/>
+          <path d="M-5 6 q5 4 10 0" stroke="#3d7a22" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- 赤福っぽいお餅とお茶 -->
+        <g transform="translate(352 244)">
+          <ellipse cx="0" cy="8" rx="18" ry="6" fill="#fdf6e3"/>
+          <path d="M-10 4 q0 -8 8 -8 q10 0 10 8 q0 4 -9 4 q-9 0 -9 -4" fill="#7c4a62"/>
+        </g>
+        <!-- とり -->
+        <g stroke="#4a7a8c" stroke-width="3" fill="none" stroke-linecap="round">
+          <path d="M210 60 q6 -8 12 0 q6 -8 12 0"/>
+          <path d="M245 44 q5 -7 10 0 q5 -7 10 0"/>
+        </g>
+      </svg>
+
+      <div class="cover-foot">
+        <div class="cover-members">
+          <div class="mk">メンバー 🚩</div>
+          <div class="mv" contenteditable="true" data-save="members">若草秘密基地のみんな</div>
+        </div>
+        <div class="cover-ribbon">🚗 安全第一で、楽しい旅にしようね！🌈</div>
+      </div>
     </div>
     <p class="edit-hint">✎ 点線の項目はタップして書き換えられます（自動保存）</p>
 
